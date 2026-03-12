@@ -10,7 +10,10 @@ export function useApiErrorNavigation() {
   const handleError = useCallback(
     (error: unknown): ApiError => {
       const apiError = normalizeApiError(error)
-      if (apiError.status === 401) {
+      if (apiError.status === 0) {
+        // Erro de rede: backend indisponível (Failed to fetch)
+        navigate('/500', { replace: true })
+      } else if (apiError.status === 401) {
         signOut()
         navigate('/login', { replace: true })
       } else if (apiError.status === 403) {

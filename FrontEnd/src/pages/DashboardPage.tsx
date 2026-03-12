@@ -50,13 +50,13 @@ export default function DashboardPage() {
       ) : (
         <div className="grid">
           <div className="col-12 md:col-6 lg:col-3">
-            <Card className="shadow-1">
+            <Card className="shadow-2" style={{ borderTop: '4px solid var(--blue-500)' }}>
               <div className="flex align-items-center gap-3">
                 <div className="flex align-items-center justify-content-center border-round bg-blue-100" style={{ width: 56, height: 56 }}>
                   <i className="pi pi-car text-3xl text-blue-500" />
                 </div>
                 <div>
-                  <div className="text-3xl font-bold">{veiculos.length}</div>
+                  <div className="text-3xl font-bold text-blue-500">{veiculos.length}</div>
                   <div className="text-500">Veículos</div>
                 </div>
               </div>
@@ -64,13 +64,13 @@ export default function DashboardPage() {
           </div>
 
           <div className="col-12 md:col-6 lg:col-3">
-            <Card className="shadow-1">
+            <Card className="shadow-2" style={{ borderTop: '4px solid var(--green-500)' }}>
               <div className="flex align-items-center gap-3">
                 <div className="flex align-items-center justify-content-center border-round bg-green-100" style={{ width: 56, height: 56 }}>
                   <i className="pi pi-map text-3xl text-green-500" />
                 </div>
                 <div>
-                  <div className="text-3xl font-bold">{viagens.length}</div>
+                  <div className="text-3xl font-bold text-green-500">{viagens.length}</div>
                   <div className="text-500">Viagens</div>
                 </div>
               </div>
@@ -78,13 +78,13 @@ export default function DashboardPage() {
           </div>
 
           <div className="col-12 md:col-6 lg:col-3">
-            <Card className="shadow-1">
+            <Card className="shadow-2" style={{ borderTop: '4px solid var(--orange-500)' }}>
               <div className="flex align-items-center gap-3">
                 <div className="flex align-items-center justify-content-center border-round bg-orange-100" style={{ width: 56, height: 56 }}>
                   <i className="pi pi-exclamation-triangle text-3xl text-orange-500" />
                 </div>
                 <div>
-                  <div className="text-3xl font-bold">{pendentes}</div>
+                  <div className="text-3xl font-bold text-orange-500">{pendentes}</div>
                   <div className="text-500">Manutenções Pendentes</div>
                 </div>
               </div>
@@ -92,13 +92,13 @@ export default function DashboardPage() {
           </div>
 
           <div className="col-12 md:col-6 lg:col-3">
-            <Card className="shadow-1">
+            <Card className="shadow-2" style={{ borderTop: '4px solid var(--yellow-600)' }}>
               <div className="flex align-items-center gap-3">
                 <div className="flex align-items-center justify-content-center border-round bg-yellow-100" style={{ width: 56, height: 56 }}>
                   <i className="pi pi-wrench text-3xl text-yellow-600" />
                 </div>
                 <div>
-                  <div className="text-3xl font-bold">{emRealizacao}</div>
+                  <div className="text-3xl font-bold text-yellow-600">{emRealizacao}</div>
                   <div className="text-500">Em Realização</div>
                 </div>
               </div>

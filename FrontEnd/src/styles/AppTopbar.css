@@ -1,0 +1,21 @@
+.app-topbar {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  background-color: var(--primary-color) !important;
+  border-bottom-color: var(--primary-700, var(--primary-color)) !important;
+}
+
+/* Título e ícones herdam a cor de contraste do tema */
+.app-topbar h2,
+.app-topbar .p-button-text,
+.app-topbar .p-button-text .pi {
+  color: var(--primary-color-text) !important;
+}
+
+/* Avatar e Tag preservam sua aparência original */
+.app-topbar .p-avatar {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: var(--primary-color-text);
+}

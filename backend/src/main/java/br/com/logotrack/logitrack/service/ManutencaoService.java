@@ -8,14 +8,19 @@ import br.com.logotrack.logitrack.model.StatusManutencao;
 import br.com.logotrack.logitrack.repository.ManutencaoRepository;
 import br.com.logotrack.logitrack.repository.VeiculoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Slf4j
+@Validated
 @Service
 @RequiredArgsConstructor
 public class ManutencaoService {
@@ -31,9 +36,9 @@ public class ManutencaoService {
                 .toList();
     }
 
-    public ManutencaoResponseDTO buscarPorId(Long id) {
+    public ManutencaoResponseDTO buscarPorId(@NotNull Long id) {
         log.info("Buscando manutenção com id {}", id);
-        return manutencaoRepository.findById(id)
+        return manutencaoRepository.findById( id)
                 .map(manutencaoMapper::toResponseDTO)
                 .orElseThrow(() -> new EntityNotFoundException("Manutenção não encontrada com id: " + id));
     }

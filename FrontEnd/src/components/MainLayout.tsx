@@ -60,8 +60,8 @@ export default function MainLayout() {
         </nav>
 
         <div className="p-3 border-top-1 surface-border">
-          <div className="text-sm text-600 mb-1 white-space-nowrap overflow-hidden text-overflow-ellipsis">{email}</div>
-          {role && <div className="text-xs text-500 mb-2">{role}</div>}
+          
+         
           <Button
             label="Sair"
             icon="pi pi-sign-out"

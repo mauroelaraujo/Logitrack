@@ -7,7 +7,7 @@ services:
       - 'MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-rootpass123}'
       - 'MYSQL_USER=${MYSQL_USER:-logitrack_user}'
     ports:
-      - '3306'
+      - '3306:3306'
     volumes:
       - mysql_data:/var/lib/mysql
 
