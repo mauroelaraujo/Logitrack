@@ -1,0 +1,15 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=${MYSQL_DATABASE:-logitrack}'
+      - 'MYSQL_PASSWORD=${MYSQL_PASSWORD:-logitrack_pass}'
+      - 'MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-rootpass123}'
+      - 'MYSQL_USER=${MYSQL_USER:-logitrack_user}'
+    ports:
+      - '3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "LogitrackApplication",
+            "request": "launch",
+            "mainClass": "br.com.logotrack.logitrack.LogitrackApplication",
+            "projectName": "logitrack"
+        }
+    ]
+}
