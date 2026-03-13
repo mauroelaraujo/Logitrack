@@ -1,0 +1,57 @@
+name: logitrack
+services:
+
+  # ─── Banco de dados MySQL ────────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.4
+    container_name: logitrack-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: logitrack
+      MYSQL_USER: logitrack_user
+      MYSQL_PASSWORD: logitrack_pass
+      MYSQL_ROOT_PASSWORD: rootpass123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "logitrack_user", "-plogitrack_pass"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ─── Backend Spring Boot ─────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: logitrack-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/logitrack?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      MYSQL_USER: logitrack_user
+      MYSQL_PASSWORD: logitrack_pass
+      JWT_SECRET: logitrack-jwt-secret-key-change-in-production-use-env
+      JWT_EXPIRATION_MS: 86400000
+    ports:
+      - "8080:8080"
+
+  # ─── Frontend React/Nginx ────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    container_name: logitrack-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  mysql_data:

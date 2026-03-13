@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Button } from 'primereact/button'
 
 export default function MainLayout() {
-  const { email, role, signOut } = useAuth()
+  const { signOut } = useAuth()
   const navigate = useNavigate()
 
   function handleSignOut() {

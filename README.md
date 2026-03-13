@@ -11,9 +11,11 @@ Sistema desenvolvido como parte de um desafio técnico para a vaga de Desenvolve
   - [Sumário](#sumário)
   - [Pré-requisitos](#pré-requisitos)
   - [Como executar](#como-executar)
-    - [Backend](#backend)
-      - [Variáveis de ambiente (opcionais)](#variáveis-de-ambiente-opcionais)
-    - [Frontend](#frontend)
+    - [Opção 1 — Docker Compose (recomendado)](#opção-1--docker-compose-recomendado)
+    - [Opção 2 — Execução local (desenvolvimento)](#opção-2--execução-local-desenvolvimento)
+      - [Backend](#backend)
+        - [Variáveis de ambiente (opcionais)](#variáveis-de-ambiente-opcionais)
+      - [Frontend](#frontend)
   - [Tecnologias utilizadas](#tecnologias-utilizadas)
     - [Tecnologias — Backend](#tecnologias--backend)
       - [Arquitetura do Backend](#arquitetura-do-backend)
@@ -26,14 +28,62 @@ Sistema desenvolvido como parte de um desafio técnico para a vaga de Desenvolve
 
 Antes de iniciar, certifique-se de que você possui instalado:
 
-- [Java 21+](https://adoptium.net/)
-- [Maven 3.9+](https://maven.apache.org/) (ou use o wrapper `mvnw` incluído no projeto)
-- [Node.js 20+](https://nodejs.org/) e npm
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (para subir o banco de dados MySQL via Docker Compose)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) — necessário para qualquer uma das opções de execução
+- [Java 21+](https://adoptium.net/) — apenas para execução local do backend
+- [Maven 3.9+](https://maven.apache.org/) (ou use o wrapper `mvnw` incluído no projeto) — apenas para execução local do backend
+- [Node.js 20+](https://nodejs.org/) e npm — apenas para execução local do frontend
 
 ---
 
 ## Como executar
+
+### Opção 1 — Docker Compose (recomendado)
+
+Sobe o sistema completo (banco de dados, backend e frontend) com um único comando, sem precisar instalar Java ou Node.js.
+
+**Pré-requisito:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado e em execução.
+
+1. Clone o repositório e acesse a pasta raiz do projeto:
+   ```bash
+   cd Logitrack
+   ```
+
+2. Suba todos os serviços:
+   ```bash
+   docker compose up --build
+   ```
+   > Na primeira execução o build pode levar alguns minutos (Maven baixa as dependências e o npm instala os pacotes).
+
+3. Aguarde até ver no terminal a mensagem indicando que o backend iniciou. Em seguida acesse:
+
+   | Serviço             | URL                                      |
+   | ------------------- | ---------------------------------------- |
+   | **Frontend**        | http://localhost                         |
+   | **Backend / API**   | http://localhost:8080                    |
+   | **Swagger UI**      | http://localhost:8080/swagger-ui.html    |
+
+4. Para parar todos os containers:
+   ```bash
+   docker compose down
+   ```
+   Para parar **e remover os dados do banco**:
+   ```bash
+   docker compose down -v
+   ```
+
+#### Serviços provisionados
+
+| Container              | Imagem              | Porta exposta |
+| ---------------------- | ------------------- | ------------- |
+| `logitrack-mysql`      | `mysql:8.4`         | `3306`        |
+| `logitrack-backend`    | build local (Java)  | `8080`        |
+| `logitrack-frontend`   | build local (nginx) | `80`          |
+
+> As credenciais padrão do banco de dados estão definidas no `docker-compose.yaml` na raiz do projeto. Em produção, substitua-as por variáveis de ambiente seguras.
+
+---
+
+### Opção 2 — Execução local (desenvolvimento)
 
 ### Backend
 
