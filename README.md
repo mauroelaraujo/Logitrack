@@ -62,13 +62,13 @@ O backend utiliza **Docker Compose** para subir o banco de dados MySQL automatic
 
 #### Variáveis de ambiente (opcionais)
 
-| Variável             | Padrão                                        | Descrição                        |
-|----------------------|-----------------------------------------------|----------------------------------|
-| `MYSQL_USER`         | `logitrack_user`                              | Usuário do banco de dados        |
-| `MYSQL_PASSWORD`     | `logitrack_pass`                              | Senha do banco de dados          |
-| `MYSQL_ROOT_PASSWORD`| `rootpass123`                                 | Senha do root do MySQL           |
-| `JWT_SECRET`         | `logitrack-jwt-secret-key-change-in-production-use-env` | Chave secreta do JWT |
-| `JWT_EXPIRATION_MS`  | `86400000`                                    | Tempo de expiração do token (ms) |
+| Variável              | Padrão                                                  | Descrição                        |
+| --------------------- | ------------------------------------------------------- | -------------------------------- |
+| `MYSQL_USER`          | `logitrack_user`                                        | Usuário do banco de dados        |
+| `MYSQL_PASSWORD`      | `logitrack_pass`                                        | Senha do banco de dados          |
+| `MYSQL_ROOT_PASSWORD` | `rootpass123`                                           | Senha do root do MySQL           |
+| `JWT_SECRET`          | `logitrack-jwt-secret-key-change-in-production-use-env` | Chave secreta do JWT             |
+| `JWT_EXPIRATION_MS`   | `86400000`                                              | Tempo de expiração do token (ms) |
 
 > **Atenção:** Em ambiente de produção, substitua os valores padrão sensíveis por variáveis de ambiente reais.
 
@@ -104,23 +104,23 @@ O backend utiliza **Docker Compose** para subir o banco de dados MySQL automatic
 
 ### Tecnologias — Backend
 
-| Tecnologia | Versão | Descrição |
-|---|---|---|
-| **Java** | 21 | Linguagem principal da aplicação |
-| **Spring Boot** | 3.5.11 | Framework base da aplicação |
-| **Spring Security** | (via Boot) | Autenticação e autorização |
-| **Spring Data JPA** | (via Boot) | Abstração de acesso a dados com Hibernate |
-| **Spring Web** | (via Boot) | Criação de APIs REST |
-| **Spring Validation** | (via Boot) | Validação de dados de entrada (Bean Validation) |
-| **Spring Actuator** | (via Boot) | Monitoramento e health check da aplicação |
-| **Spring DevTools** | (via Boot) | Hot reload em ambiente de desenvolvimento |
-| **Spring Docker Compose** | (via Boot) | Integração automática com Docker Compose |
-| **MySQL** | latest (Docker) | Banco de dados relacional |
-| **Flyway** | (via Boot) | Versionamento e migrations do banco de dados |
-| **JWT (JJWT)** | 0.12.6 | Geração e validação de tokens JWT |
-| **Lombok** | (via Boot) | Redução de boilerplate com geração de código |
-| **SpringDoc OpenAPI (Swagger)** | 2.8.5 | Documentação automática da API REST |
-| **Docker Compose** | — | Orquestração do container MySQL |
+| Tecnologia                      | Versão          | Descrição                                       |
+| ------------------------------- | --------------- | ----------------------------------------------- |
+| **Java**                        | 21              | Linguagem principal da aplicação                |
+| **Spring Boot**                 | 3.5.11          | Framework base da aplicação                     |
+| **Spring Security**             | (via Boot)      | Autenticação e autorização                      |
+| **Spring Data JPA**             | (via Boot)      | Abstração de acesso a dados com Hibernate       |
+| **Spring Web**                  | (via Boot)      | Criação de APIs REST                            |
+| **Spring Validation**           | (via Boot)      | Validação de dados de entrada (Bean Validation) |
+| **Spring Actuator**             | (via Boot)      | Monitoramento e health check da aplicação       |
+| **Spring DevTools**             | (via Boot)      | Hot reload em ambiente de desenvolvimento       |
+| **Spring Docker Compose**       | (via Boot)      | Integração automática com Docker Compose        |
+| **MySQL**                       | latest (Docker) | Banco de dados relacional                       |
+| **Flyway**                      | (via Boot)      | Versionamento e migrations do banco de dados    |
+| **JWT (JJWT)**                  | 0.12.6          | Geração e validação de tokens JWT               |
+| **Lombok**                      | (via Boot)      | Redução de boilerplate com geração de código    |
+| **SpringDoc OpenAPI (Swagger)** | 2.8.5           | Documentação automática da API REST             |
+| **Docker Compose**              | —               | Orquestração do container MySQL                 |
 
 #### Arquitetura do Backend
 
@@ -141,15 +141,15 @@ advice/       → Tratamento centralizado de exceções
 
 ### Tecnologias — Frontend
 
-| Tecnologia | Versão | Descrição |
-|---|---|---|
-| **React** | 19 | Biblioteca principal de UI |
-| **TypeScript** | 5.9 | Tipagem estática para JavaScript |
-| **Vite** | 8 | Bundler e servidor de desenvolvimento |
-| **React Router DOM** | 7 | Roteamento client-side (SPA) |
-| **PrimeReact** | 10 | Biblioteca de componentes UI |
-| **PrimeFlex** | 4 | Utilitários CSS para layout responsivo |
-| **PrimeIcons** | 7 | Biblioteca de ícones |
+| Tecnologia           | Versão | Descrição                              |
+| -------------------- | ------ | -------------------------------------- |
+| **React**            | 19     | Biblioteca principal de UI             |
+| **TypeScript**       | 5.9    | Tipagem estática para JavaScript       |
+| **Vite**             | 8      | Bundler e servidor de desenvolvimento  |
+| **React Router DOM** | 7      | Roteamento client-side (SPA)           |
+| **PrimeReact**       | 10     | Biblioteca de componentes UI           |
+| **PrimeFlex**        | 4      | Utilitários CSS para layout responsivo |
+| **PrimeIcons**       | 7      | Biblioteca de ícones                   |
 
 #### Estrutura do Frontend
 
@@ -172,3 +172,64 @@ hooks/        → Hooks customizados (useAuth, useTheme, useApiErrorNavigation)
 utils/        → Funções utilitárias (api.ts para requisições HTTP, auth.ts para token)
 types/        → Tipos TypeScript compartilhados
 ```
+
+*Sobre os comandos SQL (solicitados no desafio)*
+
+●  Total de KM percorrido: Soma da quilometragem de um veículo específico ou de toda a frota. 
+    ```
+    SELECT v.placa        AS placa,
+                   v.modelo       AS modelo,
+                   COUNT(vg.id)   AS totalViagens,
+                   COALESCE(SUM(vg.km_percorrida), 0) AS totalKmRodados
+            FROM veiculos v
+            LEFT JOIN viagens vg ON v.id = vg.veiculo_id
+            GROUP BY v.id, v.placa, v.modelo
+            ORDER BY totalKmRodados DESC;
+    ```
+●  Volume por Categoria: Quantidade de viagens realizadas filtradas por tipo de veículo (Leve vs 
+Pesado). 
+    ```
+    SELECT v.tipo AS tipo,
+			COALESCE(COUNT(vj.veiculo_id), 0) AS qtdViagens
+				FROM veiculos v
+				LEFT JOIN viagens vj ON vj.veiculo_id = v.id
+				GROUP BY v.tipo
+				ORDER BY v.tipo, qtdViagens DESC;
+    ``` 
+
+●  Cronograma de Manutenção: Listagem das próximas 5 manutenções agendadas (ordenadas por 
+data). 
+    ```
+    SELECT v.modelo         AS modelo,
+                   v.placa          AS placa,
+                   m.data_inicio    AS dataInicio,
+                   m.tipo_servico   AS tipoServico,
+                   m.custo_estimado AS custoEstimado
+            FROM manutencoes m
+            INNER JOIN veiculos v ON v.id = m.veiculo_id
+            WHERE m.status = 'PENDENTE'
+            ORDER BY m.data_inicio
+            LIMIT 5;
+    ```
+●  Ranking de Utilização: Identificar qual veículo possui a maior soma de quilometragem acumulada. 
+    ```
+    SELECT v.modelo AS modelo, placa as Placa, v.tipo AS tipo,SUM(vg.km_percorrida) AS kmPercorridos FROM viagens vg INNER JOIN veiculos v ON v.id = vg.veiculo_id GROUP BY vg.veiculo_id ORDER BY kmPercorridos DESC LIMIT 1;
+    ```
+
+
+●  Projeção Financeira: Soma do custo total estimado em manutenções para o mês atual.
+    ```
+    SELECT DATE_FORMAT(data_inicio, '%m/%y') AS mesAno,
+                   SUM(custo_estimado)               AS custo
+            FROM manutencoes
+            GROUP BY mesAno
+            ORDER BY MIN(data_inicio);
+    ```
+
+    ### Ajustes realizados para atender aos requisitos do desafio:
+
+    - inclusão da tabela usuarios para autenticação e controle de acesso
+    - inclusão de dados adicionais nas consultas SQL para fornecer informações mais completas (ex: modelo e placa dos veículos)
+
+Obs: Os script sql estão disponíveis na pasta resource do backend, na pasta `db/migrations`.
+  
