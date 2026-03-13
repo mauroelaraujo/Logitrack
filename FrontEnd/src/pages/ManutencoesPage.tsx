@@ -162,6 +162,7 @@ export default function ManutencoesPage() {
         emptyMessage="Nenhuma manutenção encontrada"
         className="shadow-1"
         scrollable
+        stripedRows
       >
         <Column field="id" header="ID" style={{ width: '5rem' }} />
         <Column field="veiculoPlaca" header="Veículo" />

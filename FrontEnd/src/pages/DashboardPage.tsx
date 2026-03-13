@@ -3,7 +3,7 @@ import { Card } from 'primereact/card'
 import { Toast } from 'primereact/toast'
 import { api, normalizeApiError } from '@/utils/api'
 import { useApiErrorNavigation } from '@/hooks/useApiErrorNavigation'
-import type { Veiculo, Viagem, Manutencao } from '@/types'
+import type { Veiculo, Viagem, Manutencao, RankingUtilizacao } from '@/types'
 
 export default function DashboardPage() {
   const toast = useRef<Toast>(null)
@@ -12,19 +12,22 @@ export default function DashboardPage() {
   const [veiculos, setVeiculos] = useState<Veiculo[]>([])
   const [viagens, setViagens] = useState<Viagem[]>([])
   const [manutencoes, setManutencoes] = useState<Manutencao[]>([])
+  const [rankingUtilizacao, setRankingUtilizacao] = useState<RankingUtilizacao | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function carregar() {
       try {
-        const [v, vi, m] = await Promise.all([
+        const [v, vi, m, ranking] = await Promise.all([
           api.get<Veiculo[]>('/api/veiculos'),
           api.get<Viagem[]>('/api/viagens'),
           api.get<Manutencao[]>('/api/manutencoes'),
+          api.get<RankingUtilizacao | null>('/api/viagens/ranking-utilizacao').catch(() => null),
         ])
         setVeiculos(v)
         setViagens(vi)
         setManutencoes(m)
+        setRankingUtilizacao(ranking)
       } catch (err) {
         const error = handleError(err)
         toast.current?.show({ severity: 'error', summary: 'Erro', detail: normalizeApiError(error).message })
@@ -100,6 +103,43 @@ export default function DashboardPage() {
                 <div>
                   <div className="text-3xl font-bold text-yellow-600">{emRealizacao}</div>
                   <div className="text-500">Em Realização</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <div className="col-12">
+            <Card className="shadow-2" style={{ borderTop: '4px solid var(--purple-500)' }}>
+              <div className="flex align-items-center gap-3">
+                <div className="flex align-items-center justify-content-center border-round bg-purple-100" style={{ width: 56, height: 56 }}>
+                  <i className="pi pi-trophy text-3xl text-purple-500" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-500 mb-1">Veículo Mais Utilizado (Ranking de Utilização)</div>
+                  {rankingUtilizacao ? (
+                    <div className="flex flex-wrap gap-4 align-items-center">
+                      <div>
+                        <span className="text-400 text-sm">Modelo</span>
+                        <div className="text-xl font-bold text-purple-500">{rankingUtilizacao.modelo}</div>
+                      </div>
+                      <div>
+                        <span className="text-400 text-sm">Placa</span>
+                        <div className="text-xl font-bold text-purple-500">{rankingUtilizacao.placa}</div>
+                      </div>
+                      <div>
+                        <span className="text-400 text-sm">Tipo</span>
+                        <div className="text-xl font-bold text-purple-500">{rankingUtilizacao.tipo}</div>
+                      </div>
+                      <div>
+                        <span className="text-400 text-sm">KM Percorridos</span>
+                        <div className="text-xl font-bold text-purple-500">
+                          {rankingUtilizacao.kmPercorridos.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} km
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-500">Nenhuma viagem registrada.</div>
+                  )}
                 </div>
               </div>
             </Card>

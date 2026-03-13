@@ -97,7 +97,10 @@ O backend utiliza **Docker Compose** para subir o banco de dados MySQL automatic
    ```
 
 > Certifique-se de que o backend está em execução antes de usar o frontend.
-
+> 
+> Credenciais para acesso:
+> - Login: mauro@gmail.com
+> - Senha: 123456
 ---
 
 ## Tecnologias utilizadas
@@ -175,8 +178,8 @@ types/        → Tipos TypeScript compartilhados
 
 *Sobre os comandos SQL (solicitados no desafio)*
 
-●  Total de KM percorrido: Soma da quilometragem de um veículo específico ou de toda a frota. 
-    ```
+●  Total de KM percorrido: Soma da quilometragem de um veículo específico ou de toda a frota.
+
     SELECT v.placa        AS placa,
                    v.modelo       AS modelo,
                    COUNT(vg.id)   AS totalViagens,
@@ -185,22 +188,24 @@ types/        → Tipos TypeScript compartilhados
             LEFT JOIN viagens vg ON v.id = vg.veiculo_id
             GROUP BY v.id, v.placa, v.modelo
             ORDER BY totalKmRodados DESC;
-    ```
+
 ●  Volume por Categoria: Quantidade de viagens realizadas filtradas por tipo de veículo (Leve vs 
 Pesado). 
-    ```
+
+
     SELECT v.tipo AS tipo,
 			COALESCE(COUNT(vj.veiculo_id), 0) AS qtdViagens
 				FROM veiculos v
 				LEFT JOIN viagens vj ON vj.veiculo_id = v.id
 				GROUP BY v.tipo
 				ORDER BY v.tipo, qtdViagens DESC;
-    ``` 
+
 
 ●  Cronograma de Manutenção: Listagem das próximas 5 manutenções agendadas (ordenadas por 
 data). 
-    ```
-    SELECT v.modelo         AS modelo,
+
+
+    SELECT v.modelo AS modelo,
                    v.placa          AS placa,
                    m.data_inicio    AS dataInicio,
                    m.tipo_servico   AS tipoServico,
@@ -210,26 +215,68 @@ data).
             WHERE m.status = 'PENDENTE'
             ORDER BY m.data_inicio
             LIMIT 5;
-    ```
+
+
 ●  Ranking de Utilização: Identificar qual veículo possui a maior soma de quilometragem acumulada. 
-    ```
-    SELECT v.modelo AS modelo, placa as Placa, v.tipo AS tipo,SUM(vg.km_percorrida) AS kmPercorridos FROM viagens vg INNER JOIN veiculos v ON v.id = vg.veiculo_id GROUP BY vg.veiculo_id ORDER BY kmPercorridos DESC LIMIT 1;
-    ```
+
+
+    SELECT  v.modelo                AS modelo, 
+            v.placa                 AS placa, 
+            v.tipo                  AS tipo,
+            SUM(vg.km_percorrida)   AS kmPercorridos 
+            FROM viagens vg 
+            INNER JOIN veiculos v ON v.id = vg.veiculo_id 
+            GROUP BY vg.veiculo_id 
+            ORDER BY kmPercorridos DESC LIMIT 1;
+    
 
 
 ●  Projeção Financeira: Soma do custo total estimado em manutenções para o mês atual.
+
+
     ```
-    SELECT DATE_FORMAT(data_inicio, '%m/%y') AS mesAno,
-                   SUM(custo_estimado)               AS custo
+    SELECT DATE_FORMAT(data_inicio, '%m/%y')        AS mesAno,
+                   SUM(custo_estimado)              AS custo
             FROM manutencoes
             GROUP BY mesAno
             ORDER BY MIN(data_inicio);
     ```
 
-    ### Ajustes realizados para atender aos requisitos do desafio:
+*Ajustes realizados para atender aos requisitos do desafio:*
 
     - inclusão da tabela usuarios para autenticação e controle de acesso
     - inclusão de dados adicionais nas consultas SQL para fornecer informações mais completas (ex: modelo e placa dos veículos)
 
 Obs: Os script sql estão disponíveis na pasta resource do backend, na pasta `db/migrations`.
   
+  *Screenshots das telas implementadas no frontend:*
+
+*Tela de Acesso*
+  [![Tela acesso](./Screenshots/telaacesso.png)](./Screenshots/telaacesso.png)
+
+*Tela Principal do Dashboard*
+  [![Tela Principal](./Screenshots/dashboard.png)](./Screenshots/dashboard.png)
+
+*Menu Principal*  
+  [![Menu Principal](./Screenshots/menu-principal.png)](./Screenshots/menu-principal.png)
+
+*Cadastro de Veículos*
+  [![Cadastro de Veículos](./Screenshots/veiculos.png)](./Screenshots/veiculos.png)
+
+*Registro de Viagens*
+  [![Registro de Viagens](./Screenshots/viagens.png)](./Screenshots/viagens.png)
+  
+*Controle de Manutenções*
+  [![Controle de Manutenções](./Screenshots/manutencoes.png)](./Screenshots/manutencoes.png)
+  
+*Consulta de Quilometragem*
+  [![Consulta de Quilometragem](./Screenshots/consulta-km.png)](./Screenshots/consulta-km.png)
+
+*Projeção Financeira*
+  [![Projeção Financeira](./Screenshots/projecao-financeira.png)](./Screenshots/projecao-financeira.png)
+  
+*Proximas Manutenções*
+  [![Próximas Manutenções](./Screenshots/proximas-manutencoes.png)](./Screenshots/proximas-manutencoes.png)
+  
+*Viagens por Tipo de Veículo*
+  [![Viagens por Tipo de Veículo](./Screenshots/viagens-por-tipo.png)](./Screenshots/viagens-por-tipo.png)

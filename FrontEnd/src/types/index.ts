@@ -79,6 +79,13 @@ export interface ManutencaoPendenteResumo {
   custoEstimado: number | null
 }
 
+export interface RankingUtilizacao {
+  modelo: string
+  placa: string
+  tipo: string
+  kmPercorridos: number
+}
+
 export interface ManutencaoCustoMensal {
   mesAno: string
   custo: number | null

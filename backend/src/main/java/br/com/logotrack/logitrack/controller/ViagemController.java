@@ -1,5 +1,6 @@
 package br.com.logotrack.logitrack.controller;
 
+import br.com.logotrack.logitrack.dto.RankingUtilizacaoDTO;
 import br.com.logotrack.logitrack.dto.ViagemRequestDTO;
 import br.com.logotrack.logitrack.dto.ViagemResponseDTO;
 import br.com.logotrack.logitrack.dto.VeiculoKmPercorridoDTO;
@@ -80,5 +81,13 @@ public class ViagemController {
     @Operation(summary = "KM percorridos agrupados por veículo, ordenado do maior para o menor")
     public ResponseEntity<List<VeiculoKmPercorridoDTO>> kmPercorridosPorVeiculo() {
         return ResponseEntity.ok(viagemService.kmPercorridosPorVeiculo());
+    }
+
+    @GetMapping("/ranking-utilizacao")
+    @Operation(summary = "Veículo com maior utilização (maior KM total percorrida)")
+    public ResponseEntity<RankingUtilizacaoDTO> rankingUtilizacao() {
+        return viagemService.rankingUtilizacao()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
     }
 }

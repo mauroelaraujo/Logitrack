@@ -1,11 +1,13 @@
 package br.com.logotrack.logitrack.repository;
 
+import br.com.logotrack.logitrack.dto.RankingUtilizacaoDTO;
 import br.com.logotrack.logitrack.dto.VeiculoKmPercorridoDTO;
 import br.com.logotrack.logitrack.model.Viagem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ViagemRepository extends JpaRepository<Viagem, Long> {
 
@@ -22,4 +24,18 @@ public interface ViagemRepository extends JpaRepository<Viagem, Long> {
             """,
             nativeQuery = true)
     List<VeiculoKmPercorridoDTO> findKmPercorridosPorVeiculo();
+
+    @Query(value = """
+            SELECT v.modelo                AS modelo,
+                   v.placa                 AS placa,
+                   v.tipo                  AS tipo,
+                   SUM(vg.km_percorrida)   AS kmPercorridos
+            FROM viagens vg
+            INNER JOIN veiculos v ON v.id = vg.veiculo_id
+            GROUP BY vg.veiculo_id
+            ORDER BY kmPercorridos DESC
+            LIMIT 1
+            """,
+            nativeQuery = true)
+    Optional<RankingUtilizacaoDTO> findRankingUtilizacao();
 }

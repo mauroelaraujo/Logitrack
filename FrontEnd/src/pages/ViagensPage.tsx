@@ -106,6 +106,14 @@ export default function ViagensPage() {
     })
   }
 
+  const formatarData = (valor?: string) => {
+    if (!valor) return '—'
+    return new Date(valor).toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    })
+  }
+
   const kmTemplate = (rowData: Viagem) =>
     rowData.kmPercorrida != null ? `${rowData.kmPercorrida.toLocaleString('pt-BR')} km` : '—'
 
@@ -137,13 +145,14 @@ export default function ViagensPage() {
         emptyMessage="Nenhuma viagem encontrada"
         className="shadow-1"
         scrollable
+        stripedRows
       >
         <Column field="id" header="ID" style={{ width: '5rem' }} />
         <Column field="veiculoPlaca" header="Veículo" />
         <Column field="origem" header="Origem" />
         <Column field="destino" header="Destino" />
-        <Column field="dataSaida" header="Saída" />
-        <Column field="dataChegada" header="Chegada" body={(r: Viagem) => r.dataChegada ?? '—'} />
+        <Column field="dataSaida" header="Saída" body={(r: Viagem) => formatarData(r.dataSaida)} />
+        <Column field="dataChegada" header="Chegada" body={(r: Viagem) => formatarData(r.dataChegada)} />
         <Column field="kmPercorrida" header="KM" body={kmTemplate} />
         <Column header="Ações" body={acoesTemplate} style={{ width: '8rem' }} />
       </DataTable>

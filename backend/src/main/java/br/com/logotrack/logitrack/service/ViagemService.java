@@ -1,5 +1,6 @@
 package br.com.logotrack.logitrack.service;
 
+import br.com.logotrack.logitrack.dto.RankingUtilizacaoDTO;
 import br.com.logotrack.logitrack.dto.VeiculoKmPercorridoDTO;
 import br.com.logotrack.logitrack.dto.VeiculoKmResumoDTO;
 import br.com.logotrack.logitrack.dto.VeiculoQtdViagensDTO;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -101,5 +103,10 @@ public class ViagemService {
     public List<VeiculoKmPercorridoDTO> kmPercorridosPorVeiculo() {
         log.info("Consultando KM percorridos agrupados por veículo");
         return viagemRepository.findKmPercorridosPorVeiculo();
+    }
+
+    public Optional<RankingUtilizacaoDTO> rankingUtilizacao() {
+        log.info("Consultando veículo com maior utilização (ranking de KM)");
+        return viagemRepository.findRankingUtilizacao();
     }
 }
