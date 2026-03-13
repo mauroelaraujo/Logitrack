@@ -1,6 +1,8 @@
 package br.com.logotrack.logitrack.service;
 
+import br.com.logotrack.logitrack.dto.ManutencaoCustoMensalDTO;
 import br.com.logotrack.logitrack.dto.ManutencaoRequestDTO;
+import br.com.logotrack.logitrack.dto.ManutencaoPendenteResumoDTO;
 import br.com.logotrack.logitrack.dto.ManutencaoResponseDTO;
 import br.com.logotrack.logitrack.mapper.ManutencaoMapper;
 import br.com.logotrack.logitrack.model.Manutencao;
@@ -55,6 +57,16 @@ public class ManutencaoService {
         return manutencaoRepository.findByStatus(status).stream()
                 .map(manutencaoMapper::toResponseDTO)
                 .toList();
+    }
+
+    public List<ManutencaoPendenteResumoDTO> listarTop5PendentesPorDataInicio() {
+        log.info("Listando as 5 próximas manutenções pendentes");
+        return manutencaoRepository.findTop5PendentesPorDataInicio();
+    }
+
+    public List<ManutencaoCustoMensalDTO> custoPorMes() {
+        log.info("Consultando custo total de manutenções agrupado por mês");
+        return manutencaoRepository.findCustoAgrupadoPorMes();
     }
 
     @Transactional

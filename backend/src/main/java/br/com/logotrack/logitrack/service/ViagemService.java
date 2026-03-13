@@ -1,5 +1,8 @@
 package br.com.logotrack.logitrack.service;
 
+import br.com.logotrack.logitrack.dto.VeiculoKmPercorridoDTO;
+import br.com.logotrack.logitrack.dto.VeiculoKmResumoDTO;
+import br.com.logotrack.logitrack.dto.VeiculoQtdViagensDTO;
 import br.com.logotrack.logitrack.dto.ViagemRequestDTO;
 import br.com.logotrack.logitrack.dto.ViagemResponseDTO;
 import br.com.logotrack.logitrack.mapper.ViagemMapper;
@@ -83,5 +86,20 @@ public class ViagemService {
             throw new EntityNotFoundException("Viagem não encontrada com id: " + id);
         }
         viagemRepository.deleteById(id);
+    }
+
+    public List<VeiculoKmResumoDTO> resumoKmPorVeiculo() {
+        log.info("Consultando resumo de KM rodados por veículo");
+        return veiculoRepository.findResumoKmPorVeiculo();
+    }
+
+    public List<VeiculoQtdViagensDTO> qtdViagensPorTipoModelo() {
+        log.info("Consultando quantidade de viagens por tipo e modelo de veículo");
+        return veiculoRepository.findQtdViagensPorTipoModelo();
+    }
+
+    public List<VeiculoKmPercorridoDTO> kmPercorridosPorVeiculo() {
+        log.info("Consultando KM percorridos agrupados por veículo");
+        return viagemRepository.findKmPercorridosPorVeiculo();
     }
 }

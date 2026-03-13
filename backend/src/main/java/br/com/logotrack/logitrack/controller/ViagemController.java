@@ -2,6 +2,9 @@ package br.com.logotrack.logitrack.controller;
 
 import br.com.logotrack.logitrack.dto.ViagemRequestDTO;
 import br.com.logotrack.logitrack.dto.ViagemResponseDTO;
+import br.com.logotrack.logitrack.dto.VeiculoKmPercorridoDTO;
+import br.com.logotrack.logitrack.dto.VeiculoKmResumoDTO;
+import br.com.logotrack.logitrack.dto.VeiculoQtdViagensDTO;
 import br.com.logotrack.logitrack.service.ViagemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -59,5 +62,23 @@ public class ViagemController {
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         viagemService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/resumo-km")
+    @Operation(summary = "Resumo de KM rodados por veículo")
+    public ResponseEntity<List<VeiculoKmResumoDTO>> resumoKmPorVeiculo() {
+        return ResponseEntity.ok(viagemService.resumoKmPorVeiculo());
+    }
+
+    @GetMapping("/resumo-por-tipo")
+    @Operation(summary = "Quantidade de viagens por tipo e modelo de veículo")
+    public ResponseEntity<List<VeiculoQtdViagensDTO>> qtdViagensPorTipoModelo() {
+        return ResponseEntity.ok(viagemService.qtdViagensPorTipoModelo());
+    }
+
+    @GetMapping("/km-percorridos")
+    @Operation(summary = "KM percorridos agrupados por veículo, ordenado do maior para o menor")
+    public ResponseEntity<List<VeiculoKmPercorridoDTO>> kmPercorridosPorVeiculo() {
+        return ResponseEntity.ok(viagemService.kmPercorridosPorVeiculo());
     }
 }

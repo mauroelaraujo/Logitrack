@@ -153,6 +153,7 @@ export default function ManutencoesPage() {
         <Button label="Nova Manutenção" icon="pi pi-plus" onClick={abrirNovo} />
       </div>
 
+      <div className="overflow-x-auto">
       <DataTable
         value={manutencoes}
         loading={loading}
@@ -160,6 +161,7 @@ export default function ManutencoesPage() {
         rows={10}
         emptyMessage="Nenhuma manutenção encontrada"
         className="shadow-1"
+        scrollable
       >
         <Column field="id" header="ID" style={{ width: '5rem' }} />
         <Column field="veiculoPlaca" header="Veículo" />
@@ -170,12 +172,14 @@ export default function ManutencoesPage() {
         <Column field="status" header="Status" body={statusTemplate} />
         <Column header="Ações" body={acoesTemplate} style={{ width: '8rem' }} />
       </DataTable>
+      </div>
 
       <Dialog
         header={editando ? 'Editar Manutenção' : 'Nova Manutenção'}
         visible={dialogVisivel}
         onHide={() => setDialogVisivel(false)}
         style={{ width: '36rem' }}
+        breakpoints={{ '576px': '95vw' }}
         modal
       >
         <div className="flex flex-column gap-3 pt-2">

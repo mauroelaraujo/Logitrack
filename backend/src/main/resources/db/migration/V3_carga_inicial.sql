@@ -1,0 +1,1 @@
+INSERT INTO `usuarios`(`nome`,`email`,`senha`,`role`) VALUES('mauro','mauro@gmail.com','$2a$10$kq/Kxl.EYeC1I7tP0id5O.AHtkAVbjnUge3oZHqPOHKPnosVW/Zl6','USER');

@@ -1,6 +1,8 @@
 package br.com.logotrack.logitrack.controller;
 
+import br.com.logotrack.logitrack.dto.ManutencaoCustoMensalDTO;
 import br.com.logotrack.logitrack.dto.ManutencaoRequestDTO;
+import br.com.logotrack.logitrack.dto.ManutencaoPendenteResumoDTO;
 import br.com.logotrack.logitrack.dto.ManutencaoResponseDTO;
 import br.com.logotrack.logitrack.model.StatusManutencao;
 import br.com.logotrack.logitrack.service.ManutencaoService;
@@ -66,5 +68,17 @@ public class ManutencaoController {
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         manutencaoService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/pendentes-proximas")
+    @Operation(summary = "Listar as 5 próximas manutenções pendentes")
+    public ResponseEntity<List<ManutencaoPendenteResumoDTO>> listarTop5PendentesPorDataInicio() {
+        return ResponseEntity.ok(manutencaoService.listarTop5PendentesPorDataInicio());
+    }
+
+    @GetMapping("/custo-por-mes")
+    @Operation(summary = "Custo total de manutenções agrupado por mês/ano")
+    public ResponseEntity<List<ManutencaoCustoMensalDTO>> custoPorMes() {
+        return ResponseEntity.ok(manutencaoService.custoPorMes());
     }
 }

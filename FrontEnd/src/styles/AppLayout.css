@@ -23,5 +23,12 @@
 .layout-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .layout-content {
+    padding: 1rem 0.75rem;
+  }
 }

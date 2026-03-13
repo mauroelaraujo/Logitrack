@@ -9,6 +9,10 @@ import { AppLayout } from '@/layouts/AppLayout'
 import VeiculosPage from '@/pages/VeiculosPage'
 import ViagensPage from '@/pages/ViagensPage'
 import ManutencoesPage from '@/pages/ManutencoesPage'
+import ConsultaKmPage from '@/pages/ConsultaKmPage'
+import ConsultaViagensPorTipoPage from '@/pages/ConsultaViagensPorTipoPage'
+import ConsultaProximasManutencoes from '@/pages/ConsultaProximasManutencoes'
+import ConsultaProjecaoFinanceiraPage from '@/pages/ConsultaProjecaoFinanceiraPage'
 import { NotFoundPage, ForbiddenPage, ServerErrorPage } from '@/pages/ErrorPages'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 export default function App() {
@@ -32,6 +36,10 @@ export default function App() {
                   <Route path="veiculos" element={<VeiculosPage />} />
                   <Route path="viagens" element={<ViagensPage />} />
                   <Route path="manutencoes" element={<ManutencoesPage />} />
+                  <Route path="consulta-km" element={<ConsultaKmPage />} />
+                  <Route path="consulta-viagens-por-tipo" element={<ConsultaViagensPorTipoPage />} />
+                  <Route path="consulta-proximas-manutencoes" element={<ConsultaProximasManutencoes />} />
+                  <Route path="consulta-projecao-financeira" element={<ConsultaProjecaoFinanceiraPage />} />
                 </Route>
               </Route>
 

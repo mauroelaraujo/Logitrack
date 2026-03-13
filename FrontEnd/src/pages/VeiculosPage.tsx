@@ -116,6 +116,7 @@ export default function VeiculosPage() {
         <Button label="Novo Veículo" icon="pi pi-plus" onClick={abrirNovo} />
       </div>
 
+      <div className="overflow-x-auto">
       <DataTable
         value={veiculos}
         loading={loading}
@@ -123,6 +124,7 @@ export default function VeiculosPage() {
         rows={10}
         emptyMessage="Nenhum veículo encontrado"
         className="shadow-1"
+        scrollable
       >
         <Column field="id" header="ID" style={{ width: '5rem' }} />
         <Column field="placa" header="Placa" />
@@ -131,12 +133,14 @@ export default function VeiculosPage() {
         <Column field="ano" header="Ano" />
         <Column header="Ações" body={acoesTemplate} style={{ width: '8rem' }} />
       </DataTable>
+      </div>
 
       <Dialog
         header={editando ? 'Editar Veículo' : 'Novo Veículo'}
         visible={dialogVisivel}
         onHide={() => setDialogVisivel(false)}
         style={{ width: '32rem' }}
+        breakpoints={{ '576px': '95vw' }}
         modal
       >
         <div className="flex flex-column gap-3 pt-2">

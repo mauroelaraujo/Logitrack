@@ -128,6 +128,7 @@ export default function ViagensPage() {
         <Button label="Nova Viagem" icon="pi pi-plus" onClick={abrirNovo} />
       </div>
 
+      <div className="overflow-x-auto">
       <DataTable
         value={viagens}
         loading={loading}
@@ -135,6 +136,7 @@ export default function ViagensPage() {
         rows={10}
         emptyMessage="Nenhuma viagem encontrada"
         className="shadow-1"
+        scrollable
       >
         <Column field="id" header="ID" style={{ width: '5rem' }} />
         <Column field="veiculoPlaca" header="Veículo" />
@@ -145,12 +147,14 @@ export default function ViagensPage() {
         <Column field="kmPercorrida" header="KM" body={kmTemplate} />
         <Column header="Ações" body={acoesTemplate} style={{ width: '8rem' }} />
       </DataTable>
+      </div>
 
       <Dialog
         header={editando ? 'Editar Viagem' : 'Nova Viagem'}
         visible={dialogVisivel}
         onHide={() => setDialogVisivel(false)}
         style={{ width: '36rem' }}
+        breakpoints={{ '576px': '95vw' }}
         modal
       >
         <div className="flex flex-column gap-3 pt-2">

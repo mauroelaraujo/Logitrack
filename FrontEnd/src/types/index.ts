@@ -59,6 +59,31 @@ export interface ManutencaoRequest {
   status?: StatusManutencao
 }
 
+export interface VeiculoKmResumo {
+  placa: string
+  modelo: string
+  totalViagens: number
+  totalKmRodados: number
+}
+
+export interface VeiculoQtdViagens {
+  tipo: string
+  qtdViagens: number
+}
+
+export interface ManutencaoPendenteResumo {
+  modelo: string
+  placa: string
+  dataInicio: string
+  tipoServico: string
+  custoEstimado: number | null
+}
+
+export interface ManutencaoCustoMensal {
+  mesAno: string
+  custo: number | null
+}
+
 export interface AuthResponse {
   token: string
   tipo: string

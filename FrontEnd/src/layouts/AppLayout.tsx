@@ -8,7 +8,7 @@ import { useAuth } from '../hooks/useAuth'
 import '../styles/AppLayout.css'
 
 export const AppLayout = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(true)
+  const [sidebarVisible, setSidebarVisible] = useState(() => window.innerWidth >= 992)
   const navigate = useNavigate()
   useAuth()
 
@@ -72,7 +72,37 @@ export const AppLayout = () => {
                 </Accordion>
               </AccordionTab>
             </Accordion>
-
+<Accordion multiple className="mt-3" activeIndex={null}>
+              <AccordionTab header="Consultas">
+                <Button
+                  label="KM Percorridos"
+                  icon="pi pi-chart-bar"
+                  className="p-button-text w-full justify-content-start"
+                  onClick={() => navigateTo('/consulta-km')}
+                />
+                <Button
+                  label="Viagens por Tipo"
+                  icon="pi pi-car"
+                  className="p-button-text w-full justify-content-start"
+                  onClick={() => navigateTo('/consulta-viagens-por-tipo')}
+                />
+                <Button
+                  label="Próximas Manutenções"
+                  icon="pi pi-wrench"
+                  className="p-button-text w-full justify-content-start"
+                  onClick={() => navigateTo('/consulta-proximas-manutencoes')}
+                />
+                <Button
+                  label="Projeção Financeira"
+                  icon="pi pi-dollar"
+                  className="p-button-text w-full justify-content-start"
+                  onClick={() => navigateTo('/consulta-projecao-financeira')}
+                />
+                <Accordion multiple className="mt-3" activeIndex={null}>
+                  
+                </Accordion>
+              </AccordionTab>
+            </Accordion>
           </div>
         </Sidebar>
         <main className="layout-content">
