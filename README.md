@@ -176,14 +176,16 @@ utils/        → Funções utilitárias (api.ts para requisições HTTP, auth.t
 types/        → Tipos TypeScript compartilhados
 ```
 
+---
+
 *Sobre os comandos SQL (solicitados no desafio)*
 
 ●  Total de KM percorrido: Soma da quilometragem de um veículo específico ou de toda a frota.
 
-    SELECT v.placa        AS placa,
-                   v.modelo       AS modelo,
-                   COUNT(vg.id)   AS totalViagens,
-                   COALESCE(SUM(vg.km_percorrida), 0) AS totalKmRodados
+    SELECT v.placa                                      AS placa,
+                   v.modelo                             AS modelo,
+                   COUNT(vg.id)                         AS totalViagens,
+                   COALESCE(SUM(vg.km_percorrida), 0)   AS totalKmRodados
             FROM veiculos v
             LEFT JOIN viagens vg ON v.id = vg.veiculo_id
             GROUP BY v.id, v.placa, v.modelo
@@ -193,8 +195,8 @@ types/        → Tipos TypeScript compartilhados
 Pesado). 
 
 
-    SELECT v.tipo AS tipo,
-			COALESCE(COUNT(vj.veiculo_id), 0) AS qtdViagens
+    SELECT v.tipo                               AS tipo,
+			COALESCE(COUNT(vj.veiculo_id), 0)   AS qtdViagens
 				FROM veiculos v
 				LEFT JOIN viagens vj ON vj.veiculo_id = v.id
 				GROUP BY v.tipo
@@ -234,21 +236,23 @@ data).
 ●  Projeção Financeira: Soma do custo total estimado em manutenções para o mês atual.
 
 
-    ```
+    
     SELECT DATE_FORMAT(data_inicio, '%m/%y')        AS mesAno,
                    SUM(custo_estimado)              AS custo
             FROM manutencoes
             GROUP BY mesAno
             ORDER BY MIN(data_inicio);
-    ```
+    
 
+---
 *Ajustes realizados para atender aos requisitos do desafio:*
 
     - inclusão da tabela usuarios para autenticação e controle de acesso
     - inclusão de dados adicionais nas consultas SQL para fornecer informações mais completas (ex: modelo e placa dos veículos)
 
-Obs: Os script sql estão disponíveis na pasta resource do backend, na pasta `db/migrations`.
-  
+>Obs: Os script sql estão disponíveis na pasta resource do backend, na pasta `db/migrations`.
+
+---  
   *Screenshots das telas implementadas no frontend:*
 
 *Tela de Acesso*
@@ -280,3 +284,5 @@ Obs: Os script sql estão disponíveis na pasta resource do backend, na pasta `d
   
 *Viagens por Tipo de Veículo*
   [![Viagens por Tipo de Veículo](./Screenshots/viagens-por-tipo.png)](./Screenshots/viagens-por-tipo.png)
+
+---

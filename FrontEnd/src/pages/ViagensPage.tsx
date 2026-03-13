@@ -68,6 +68,10 @@ export default function ViagensPage() {
   }
 
   async function salvar() {
+    if (form.dataChegada && form.dataSaida && new Date(form.dataSaida) > new Date(form.dataChegada)) {
+      toast.current?.show({ severity: 'warn', summary: 'Data inválida', detail: 'A data de saída não pode ser maior que a data de chegada.' })
+      return
+    }
     setSaving(true)
     try {
       if (editando) {
